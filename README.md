@@ -1,5 +1,11 @@
 <h1 align="center">Projekt Eszközök<br>Beadandó projekt</h1>
 
+## Tagok:
+- Pálinkás András
+- Király Bianka
+- Szabó Barna
+- Kovács Márk
+
 ## Projektötlet
 ### Feladatleírás(Kezdeti tervek)
 Készítsünk egy játékprogramot, amiben egy karaktert irányítunk, aki különböző ellenfelekkel tud csatázni. Az alap kiinulási hely egy város, ahol dönthetünk, hogy a karakterünk mit kíván csinálni. (Elmegy kalandozni, szintetlép, alszik, vásárol...)
