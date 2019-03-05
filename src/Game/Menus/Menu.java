@@ -1,5 +1,6 @@
 package Game.Menus;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 public abstract class Menu{
@@ -11,10 +12,21 @@ public abstract class Menu{
     }
 
     public void runMenu(){
+        clrscr();
         System.out.println("####################");
         System.out.println(title);
         System.out.println("####################");
         System.out.println();
+    }
+
+    public static void clrscr(){
+        //Clears Screen in java
+        try {
+            if (System.getProperty("os.name").contains("Windows"))
+                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+            else
+                Runtime.getRuntime().exec("clear");
+        } catch (IOException | InterruptedException ex) {}
     }
 
     public void printMenu() {}
@@ -30,7 +42,7 @@ public abstract class Menu{
                 choice = Integer.parseInt(input.nextLine());
             }catch (NumberFormatException e){
                 isNumber = false;
-                System.out.println("Please type in 1, 2 or 3");
+                System.out.println("Please type in a number");
             }
             if (isNumber){
                 isValidNumber = checkConditions(choice);
