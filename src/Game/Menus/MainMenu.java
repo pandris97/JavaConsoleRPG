@@ -4,6 +4,9 @@ package Game.Menus;
 public class MainMenu extends Menu {
 
     public CharacterCreationMenu chcMenu = new CharacterCreationMenu();
+    public LoadCharacterMenu loadMenu = new LoadCharacterMenu();
+    public TownMenu townMenu = new TownMenu();
+
 
     public MainMenu(){
         setTitle("Main Menu");
@@ -23,7 +26,6 @@ public class MainMenu extends Menu {
 
     @Override
     public void printMenu() {
-        System.out.flush();
         System.out.println("1 Create New Character");
         System.out.println("2 Load Character");
         System.out.println("3 Exit Game");
@@ -45,13 +47,32 @@ public class MainMenu extends Menu {
     public void goToMenu(int chosenMenu) {
         switch (chosenMenu){
             case 1:
-                chcMenu.runMenu();
+                createCharacter();
+                goToTown();
+                townMenu = new TownMenu();
                 break;
             case 2:
+                loadCharacter();
+                goToTown();
+                townMenu = new TownMenu();
                 break;
             case 3:
                 toExit = true;
                 break;
+                default:
+                    break;
         }
+    }
+
+    private void loadCharacter() {
+        loadMenu.runMenu();
+    }
+
+    private void goToTown() {
+        townMenu.runMenu();
+    }
+
+    private void createCharacter() {
+        chcMenu.runMenu();
     }
 }

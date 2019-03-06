@@ -57,10 +57,6 @@ public abstract class Menu{
 
     public void goToMenu(int chosenMenu){}
 
-    public String getTitle() {
-        return title;
-    }
-
     public void setTitle(String title) {
         this.title = title;
     }
