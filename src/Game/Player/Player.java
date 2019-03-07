@@ -1,25 +1,29 @@
 package Game.Player;
 
-import java.io.Serializable;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.ObjectInputStream;
-import java.io.FileOutputStream;
-import java.io.ObjectOutputStream;
-import java.io.IOException;
+import Util.JSON.Json;
+import Util.JSON.JsonObject;
+import Util.JSON.ParseException;
 
-public class Player implements Serializable {
+import java.io.*;
+
+public class Player {
+
+    private static Player CurrentCharacter = null;
 
     private final String Name;
     private int Level;
     private int Experience;
     private int Gold;
+    private int MaxHealth;
+    private int CurrentHealth;
 
     public Player(String name) {
         Name = name;
         Level = 1;
         Experience = 0;
         Gold = 0;
+        MaxHealth = 100;
+        CurrentHealth = MaxHealth;
     }
 
     public static Player loadFromFile(String playerName) {
@@ -28,38 +32,71 @@ public class Player implements Serializable {
         if (!saveFile.exists())
             return null;
 
-        try (
-                FileInputStream stream = new FileInputStream(saveFile);
-                ObjectInputStream inputStream = new ObjectInputStream(stream)) {
-            return (Player) inputStream.readObject();
+        try (FileInputStream reader = new FileInputStream(saveFile)) {
+            byte[] bytes = new byte[(int)saveFile.length()];
+            reader.read(bytes);
+            JsonObject characterData = Json.parse(new String(bytes, "UTF-8")).asObject();
+
+            Player character = new Player(characterData.get("name").asString());
+
+            // TODO: if we add new fields in the future, then older save files will not contain these fields,
+            //  so we'll get nullpointer exceptions here
+            character.Level = characterData.get("level").asInt();
+            character.Experience = characterData.get("experience").asInt();
+            character.Gold = characterData.get("gold").asInt();
+            character.MaxHealth = characterData.get("maxhealth").asInt();
+            character.CurrentHealth = characterData.get("currenthealth").asInt();
+
+            CurrentCharacter = character;
+            return character;
         }
-        catch (IOException | ClassNotFoundException ex) {
+        catch (IOException | ParseException | NullPointerException ex) {
             return null;
         }
     }
 
-    public boolean saveToFile() {
+    // returns a string if there was an error during saving the file
+    // if it was successful, null is returned
+    // isNew - true if the character was just created, so we don't overwrite an existing file
+    public String saveToFile(boolean isNew) {
         File saveFile = new File(Name + ".save");
 
-        if (!saveFile.exists()) {
+        if (saveFile.exists()) {
+            if (isNew) {
+                return "this character already exists";
+            }
+        } else {
             try {
                 saveFile.createNewFile();
             } catch (IOException ex) {
-                return false;
+                return "cannot save file (maybe the name contains invalid characters, or no permission to create the file)";
             }
         }
 
-        try (
-        FileOutputStream stream = new FileOutputStream(saveFile);
-        ObjectOutputStream outputStream = new ObjectOutputStream(stream)) {
-            outputStream.writeObject(this);
-            outputStream.flush();
+        try (PrintWriter writer = new PrintWriter(saveFile)) {
+            JsonObject characterData = Json.object();
+            characterData.add("name", Name);
+            characterData.add("level", Level);
+            characterData.add("experience", Experience);
+            characterData.add("gold", Gold);
+            characterData.add("maxhealth", MaxHealth);
+            characterData.add("currenthealth", CurrentHealth);
+
+            writer.print(characterData.toString());
         }
         catch (IOException ex) {
-            return  false;
+            return "cannot write file";
         }
 
-        return true;
+        return null;
+    }
+
+    public static Player getCurrentCharacter() {
+        return CurrentCharacter;
+    }
+
+    public static void setCurrentCharacter(Player character) {
+        CurrentCharacter = character;
     }
 
     public String getName() {
@@ -81,7 +118,7 @@ public class Player implements Serializable {
         return Gold >= amount;
     }
 
-    public boolean reduceMoney(int amount) {
+    public boolean spendMoney(int amount) {
         if (amount < 0)
             return false;
 
@@ -122,5 +159,37 @@ public class Player implements Serializable {
             ++Level;
             // maybe add some talent points later
         }
+    }
+
+    public int getCurrentHealth() {
+        return CurrentHealth;
+    }
+
+    public int getMaxHealth() {
+        return MaxHealth;
+    }
+
+    private void die() {
+        // maybe delete the character
+    }
+
+    public void receiveDamage(int dmg) {
+        if (dmg < 0)
+            return;
+
+        CurrentHealth -= dmg;
+
+        if (CurrentHealth <= 0)
+            die();
+    }
+
+    public void restoreHealth(int hp) {
+        if (hp < 0)
+            return;
+
+        CurrentHealth += hp;
+
+        if (CurrentHealth > MaxHealth)
+            CurrentHealth = MaxHealth;
     }
 }
