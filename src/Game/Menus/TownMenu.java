@@ -12,17 +12,20 @@ public class TownMenu extends Menu{
 
     @Override
     public int runMenu() {
+        Player character = Player.getCurrentCharacter();
+
         while (!toExitTown) {
             super.runMenu();
-            Player character = Player.getCurrentCharacter();
             System.out.println("Gold: " + character.getMoney() + "g");
             System.out.println("XP: " + character.getExperience() + "xp/" + character.getExperienceForNextLevel());
             System.out.println("Character level: " + character.getLevel());
-            System.out.println("Health: " + character.getCurrentHealth() + "/" + character.getMaxHealth());
+            System.out.println("Health: " + character.getStats().getCurrentHealth() + "/" + character.getStats().getMaxHealth());
             printMenu();
             int chosenMenu2 = getInput();
             goToMenu(chosenMenu2);
         }
+
+        character.saveToFile(false);
 
         return 0;
     }
@@ -65,9 +68,9 @@ public class TownMenu extends Menu{
             case 4:
                 toExitTown = true;
                 break;
-                default:
-                    toExitTown = false;
-                    break;
+            default:
+                toExitTown = false;
+                break;
         }
     }
 }

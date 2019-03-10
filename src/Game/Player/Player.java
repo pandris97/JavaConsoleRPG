@@ -5,7 +5,6 @@ import Util.JSON.JsonObject;
 import Util.JSON.ParseException;
 
 import java.io.*;
-import java.nio.file.Path;
 
 public class Player {
 
@@ -15,20 +14,20 @@ public class Player {
     private int Level;
     private int Experience;
     private int Gold;
-    private int MaxHealth;
-    private int CurrentHealth;
+
+    private PlayerStats Stats;
 
     public Player(String name) {
         Name = name;
         Level = 1;
         Experience = 0;
         Gold = 0;
-        MaxHealth = 100;
-        CurrentHealth = MaxHealth;
+
+        Stats = new PlayerStats();
     }
 
     public static Player loadFromFile(String playerName) {
-        File saveFile = new File(playerName + ".save");
+        File saveFile = new File("save/" + playerName + ".save");
 
         if (!saveFile.exists())
             return null;
@@ -55,15 +54,8 @@ public class Player {
             else
                 character.Gold = 0;
 
-            if (characterData.contains("maxhealth"))
-                character.MaxHealth = characterData.get("maxhealth").asInt();
-            else
-                character.MaxHealth = 100;
-
-            if (characterData.contains("currenthealth"))
-                character.CurrentHealth = characterData.get("currenthealth").asInt();
-            else
-                character.CurrentHealth = 100;
+            if (characterData.contains("stats"))
+                character.Stats = PlayerStats.loadFromJSON(characterData.get("stats").asObject());
 
             CurrentCharacter = character;
             return character;
@@ -98,15 +90,20 @@ public class Player {
             }
         }
 
-        try (PrintWriter writer = new PrintWriter(saveFile)) {
-            JsonObject characterData = Json.object();
-            characterData.add("name", Name);
-            characterData.add("level", Level);
-            characterData.add("experience", Experience);
-            characterData.add("gold", Gold);
-            characterData.add("maxhealth", MaxHealth);
-            characterData.add("currenthealth", CurrentHealth);
+        JsonObject characterData = Json.object();
+        characterData.add("name", Name);
+        characterData.add("level", Level);
+        characterData.add("experience", Experience);
+        characterData.add("gold", Gold);
 
+        JsonObject characterStats = Json.object();
+        characterData.add("stats", characterStats);
+        characterStats.add("maxhealth", Stats.getMaxHealth());
+        characterStats.add("currenthealth", Stats.getCurrentHealth());
+        characterStats.add("strength", Stats.getStrength());
+        characterStats.add("dexterity", Stats.getDexterity());
+
+        try (PrintWriter writer = new PrintWriter(saveFile)) {
             writer.print(characterData.toString());
         }
         catch (IOException ex) {
@@ -186,14 +183,6 @@ public class Player {
         }
     }
 
-    public int getCurrentHealth() {
-        return CurrentHealth;
-    }
-
-    public int getMaxHealth() {
-        return MaxHealth;
-    }
-
     private void die() {
         // maybe delete the character
     }
@@ -202,9 +191,9 @@ public class Player {
         if (dmg < 0)
             return;
 
-        CurrentHealth -= dmg;
+        Stats.setCurrentHealth(Stats.getCurrentHealth() - dmg);
 
-        if (CurrentHealth <= 0)
+        if (Stats.getCurrentHealth() <= 0)
             die();
     }
 
@@ -212,9 +201,10 @@ public class Player {
         if (hp < 0)
             return;
 
-        CurrentHealth += hp;
+        Stats.setCurrentHealth(Stats.getCurrentHealth() + hp);
+    }
 
-        if (CurrentHealth > MaxHealth)
-            CurrentHealth = MaxHealth;
+    public PlayerStats getStats() {
+        return Stats;
     }
 }
