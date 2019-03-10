@@ -11,12 +11,14 @@ public abstract class Menu{
         title = "menu";
     }
 
-    public void runMenu(){
+    // the return value is an error code, on success 0 is returned
+    public int runMenu(){
         clrscr();
         System.out.println("####################");
         System.out.println(title);
         System.out.println("####################");
         System.out.println();
+        return 0;
     }
 
     public static void clrscr(){

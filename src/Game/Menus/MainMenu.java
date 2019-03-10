@@ -15,13 +15,15 @@ public class MainMenu extends Menu {
     public boolean toExit=false;
 
     @Override
-    public void runMenu() {
+    public int runMenu() {
         while (!toExit) {
             super.runMenu();
             printMenu();
             int chosenMenu = getInput();
             goToMenu(chosenMenu);
         }
+
+        return 0;
     }
 
     @Override
@@ -47,12 +49,16 @@ public class MainMenu extends Menu {
     public void goToMenu(int chosenMenu) {
         switch (chosenMenu){
             case 1:
-                createCharacter();
+                if (!createCharacter())
+                    break;
+
                 goToTown();
                 townMenu = new TownMenu();
                 break;
             case 2:
-                loadCharacter();
+                if (!loadCharacter())
+                    break;
+
                 goToTown();
                 townMenu = new TownMenu();
                 break;
@@ -64,15 +70,15 @@ public class MainMenu extends Menu {
         }
     }
 
-    private void loadCharacter() {
-        loadMenu.runMenu();
+    private boolean loadCharacter() {
+        return loadMenu.runMenu() == 0;
     }
 
     private void goToTown() {
         townMenu.runMenu();
     }
 
-    private void createCharacter() {
-        chcMenu.runMenu();
+    private boolean createCharacter() {
+        return chcMenu.runMenu() == 0;
     }
 }

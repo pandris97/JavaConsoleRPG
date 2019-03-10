@@ -1,12 +1,8 @@
 package Game.Menus;
 
-public class TownMenu extends Menu{
+import Game.Player.Player;
 
-    public int gold = 0;
-    public int currXp = 0;
-    public int xpToLevelUP = 10;
-    public int playerLvl=1;
-    public int HP = 100;
+public class TownMenu extends Menu{
 
     private boolean toExitTown = false;
 
@@ -15,17 +11,23 @@ public class TownMenu extends Menu{
     }
 
     @Override
-    public void runMenu() {
+    public int runMenu() {
+        Player character = Player.getCurrentCharacter();
+
         while (!toExitTown) {
             super.runMenu();
-            System.out.println("Gold: " + gold + "g");
-            System.out.println("XP:" + currXp + "xp/" + xpToLevelUP);
-            System.out.println("Character level: " + playerLvl);
-            System.out.println("Health: " + HP);
+            System.out.println("Gold: " + character.getMoney() + "g");
+            System.out.println("XP: " + character.getExperience() + "xp/" + character.getExperienceForNextLevel());
+            System.out.println("Character level: " + character.getLevel());
+            System.out.println("Health: " + character.getStats().getCurrentHealth() + "/" + character.getStats().getMaxHealth());
             printMenu();
             int chosenMenu2 = getInput();
             goToMenu(chosenMenu2);
         }
+
+        character.saveToFile(false);
+
+        return 0;
     }
 
     @Override
@@ -49,25 +51,26 @@ public class TownMenu extends Menu{
 
     @Override
     public void goToMenu(int chosenMenu2) {
+        Player character = Player.getCurrentCharacter();
         switch (chosenMenu2){
             case 1:
-                currXp++;
-                gold++;
-                HP--;
+                character.addExperience(1);
+                character.addMoney(1);
+                character.receiveDamage(1);
                 break;
             case 2:
-                gold--;
+                character.spendMoney(1);
                 break;
             case 3:
-                HP++;
-                gold--;
+                character.restoreHealth(1);
+                character.spendMoney(1);
                 break;
             case 4:
                 toExitTown = true;
                 break;
-                default:
-                    toExitTown = false;
-                    break;
+            default:
+                toExitTown = false;
+                break;
         }
     }
 }
