@@ -1,5 +1,6 @@
 package Game.Player;
 
+import Util.JSON.Json;
 import Util.JSON.JsonObject;
 
 public class PlayerStats {
@@ -33,6 +34,15 @@ public class PlayerStats {
             stats.Dexterity = json.get("dexterity").asInt();
 
         return stats;
+    }
+
+    public void saveToJSON(JsonObject json) {
+        JsonObject characterStats = Json.object();
+        json.add("stats", characterStats);
+        characterStats.add("maxhealth", MaxHealth);
+        characterStats.add("currenthealth", CurrentHealth);
+        characterStats.add("strength", Strength);
+        characterStats.add("dexterity", Dexterity);
     }
 
     public int getMaxHealth() {

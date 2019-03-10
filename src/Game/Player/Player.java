@@ -96,12 +96,7 @@ public class Player {
         characterData.add("experience", Experience);
         characterData.add("gold", Gold);
 
-        JsonObject characterStats = Json.object();
-        characterData.add("stats", characterStats);
-        characterStats.add("maxhealth", Stats.getMaxHealth());
-        characterStats.add("currenthealth", Stats.getCurrentHealth());
-        characterStats.add("strength", Stats.getStrength());
-        characterStats.add("dexterity", Stats.getDexterity());
+        Stats.saveToJSON(characterData);
 
         try (PrintWriter writer = new PrintWriter(saveFile)) {
             writer.print(characterData.toString());
