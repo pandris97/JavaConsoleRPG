@@ -13,18 +13,15 @@ public class LoadCharacterMenu extends Menu{
     }
 
     @Override
-    public void runMenu() {
+    public int runMenu() {
         super.runMenu();
 
         boolean fileExists;
         do {
             printMenu();
 
-            if (characterName.isEmpty()) {
-                fileExists = false;
-                System.out.println("Character name cannot be empty");
-                continue;
-            }
+            if (characterName.isEmpty())
+                return 1;
 
             Player character = Player.loadFromFile(characterName);
 
@@ -36,11 +33,13 @@ public class LoadCharacterMenu extends Menu{
                 Player.setCurrentCharacter(character);
             }
         } while (!fileExists);
+
+        return 0;
     }
 
     @Override
     public void printMenu() {
-        System.out.print("Your character's name: ");
+        System.out.print("Your character's name (leave empty to cancel): ");
         Scanner in = new Scanner(System.in);
         characterName = in.nextLine();
     }

@@ -11,18 +11,20 @@ public class TownMenu extends Menu{
     }
 
     @Override
-    public void runMenu() {
+    public int runMenu() {
         while (!toExitTown) {
             super.runMenu();
             Player character = Player.getCurrentCharacter();
             System.out.println("Gold: " + character.getMoney() + "g");
-            System.out.println("XP:" + character.getExperience() + "xp/" + character.getExperienceForNextLevel());
+            System.out.println("XP: " + character.getExperience() + "xp/" + character.getExperienceForNextLevel());
             System.out.println("Character level: " + character.getLevel());
             System.out.println("Health: " + character.getCurrentHealth() + "/" + character.getMaxHealth());
             printMenu();
             int chosenMenu2 = getInput();
             goToMenu(chosenMenu2);
         }
+
+        return 0;
     }
 
     @Override

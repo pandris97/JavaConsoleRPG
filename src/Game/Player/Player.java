@@ -5,6 +5,7 @@ import Util.JSON.JsonObject;
 import Util.JSON.ParseException;
 
 import java.io.*;
+import java.nio.file.Path;
 
 public class Player {
 
@@ -39,13 +40,30 @@ public class Player {
 
             Player character = new Player(characterData.get("name").asString());
 
-            // TODO: if we add new fields in the future, then older save files will not contain these fields,
-            //  so we'll get nullpointer exceptions here
-            character.Level = characterData.get("level").asInt();
-            character.Experience = characterData.get("experience").asInt();
-            character.Gold = characterData.get("gold").asInt();
-            character.MaxHealth = characterData.get("maxhealth").asInt();
-            character.CurrentHealth = characterData.get("currenthealth").asInt();
+            if (characterData.contains("level"))
+                character.Level = characterData.get("level").asInt();
+            else
+                character.Level = 1;
+
+            if (characterData.contains("experience"))
+                character.Experience = characterData.get("experience").asInt();
+            else
+                character.Experience = 0;
+
+            if (characterData.contains("gold"))
+                character.Gold = characterData.get("gold").asInt();
+            else
+                character.Gold = 0;
+
+            if (characterData.contains("maxhealth"))
+                character.MaxHealth = characterData.get("maxhealth").asInt();
+            else
+                character.MaxHealth = 100;
+
+            if (characterData.contains("currenthealth"))
+                character.CurrentHealth = characterData.get("currenthealth").asInt();
+            else
+                character.CurrentHealth = 100;
 
             CurrentCharacter = character;
             return character;
@@ -59,7 +77,14 @@ public class Player {
     // if it was successful, null is returned
     // isNew - true if the character was just created, so we don't overwrite an existing file
     public String saveToFile(boolean isNew) {
-        File saveFile = new File(Name + ".save");
+
+        File saveFileDirectory = new File("save");
+        if (!saveFileDirectory.isDirectory()) {
+            if (!saveFileDirectory.mkdirs())
+                return "cannot create folder for save files";
+        }
+
+        File saveFile = new File("save/" + Name + ".save");
 
         if (saveFile.exists()) {
             if (isNew) {
