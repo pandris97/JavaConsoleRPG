@@ -16,6 +16,7 @@ public class Player {
     private int Gold;
 
     private PlayerStats Stats;
+    private PlayerItems Items;
 
     public Player(String name) {
         Name = name;

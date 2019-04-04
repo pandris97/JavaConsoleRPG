@@ -6,11 +6,10 @@ public abstract class Item {
     
     protected String name;
     protected Integer price;
-
-    public Item() {
-    }
+    protected final Integer ID;
     
-    public Item(String name, Integer price) {
+    public Item(Integer id, String name, Integer price) {
+        this.ID = id;
         this.name = name;
         this.price = price;
     }
