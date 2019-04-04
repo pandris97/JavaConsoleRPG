@@ -1,5 +1,8 @@
 package Game.Player;
 
+import Game.Items.Item;
+import Game.Items.ItemType;
+import Game.Items.WeaponItem;
 import Util.JSON.Json;
 import Util.JSON.JsonObject;
 import Util.JSON.ParseException;
@@ -207,5 +210,38 @@ public class Player {
 
     public PlayerStats getStats() {
         return Stats;
+    }
+
+    public PlayerItems getItemData() { return Items; }
+
+    // returns true if the purchase was successful, else returns false
+    public boolean buyItem(Item newItem) {
+        if (!hasEnoughMoney(newItem.getPrice()))
+            return false;
+
+        if (newItem.getType() == ItemType.AXE || newItem.getType() == ItemType.SWORD) {
+            WeaponItem itemAsWeapon = (WeaponItem) newItem;
+            if (itemAsWeapon.getRequiredDexterity() > getStats().getDexterity() ||
+                itemAsWeapon.getRequiredStrength() > getStats().getStrength())
+                return false;
+        }
+
+        if (!Items.storeNewItem(newItem))
+            return false;
+
+        spendMoney(newItem.getPrice());
+        return true;
+    }
+
+    public void sellItem(Item item) {
+        for (int i = 0; i < PlayerItems.MaxInventorySize; ++i) {
+            Item currentItem = Items.getInventoryItem(i);
+
+            if (currentItem == item) {
+                Items.removeInventoryItem(i);
+                addMoney(item.getPrice());
+                return;
+            }
+        }
     }
 }

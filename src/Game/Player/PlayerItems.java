@@ -8,12 +8,14 @@ import Util.JSON.JsonArray;
 import Util.JSON.JsonObject;
 import Util.JSON.JsonValue;
 
+import java.util.ArrayList;
+
 public class PlayerItems {
 
     // can be null
     WeaponItem Weapon;
 
-    private static final int MaxInventorySize = 10;
+    public static final int MaxInventorySize = 10;
     Item[] Inventory;
 
     PlayerItems() {
@@ -23,7 +25,8 @@ public class PlayerItems {
     public static PlayerItems loadFromJSON(JsonObject json) {
         PlayerItems items = new PlayerItems();
 
-        if (json.contains("weapon")) {
+        if (json.contains("weapon") && json.get("weapon").isNumber()) {
+
             int weaponID = json.get("weapon").asInt();
 
             WeaponItem weaponItem = (WeaponItem) Shop.getItemById(weaponID);
@@ -71,5 +74,38 @@ public class PlayerItems {
             else
                 inventory.add(Json.NULL);
         }
+    }
+
+    public boolean storeNewItem(Item newItem) {
+        for (int i = 0; i < MaxInventorySize; ++i) {
+            if (Inventory[i] == null) {
+                Inventory[i] = newItem;
+
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public Item getInventoryItem(int index) {
+        return Inventory[index];
+    }
+
+    public Item removeInventoryItem(int index) {
+        Item returnItem = Inventory[index];
+        Inventory[index] = null;
+        return returnItem;
+    }
+
+    public ArrayList<Item> getAllInventoryItems() {
+        ArrayList<Item> items = new ArrayList<>();
+
+        for (int i = 0; i < MaxInventorySize; ++i) {
+            if (Inventory[i] != null)
+                items.add(Inventory[i]);
+        }
+
+        return items;
     }
 }
