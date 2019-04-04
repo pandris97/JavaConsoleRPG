@@ -4,7 +4,7 @@ package Game.Items;
 public class Axe extends WeaponItem {
 
     public Axe(Integer id, String name, Integer price) {
-        super(id, name, price);
+        super(id, ItemType.AXE, name, price);
     }
 
     @Override

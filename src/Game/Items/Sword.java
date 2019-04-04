@@ -4,7 +4,7 @@ package Game.Items;
 public class Sword extends WeaponItem {
 
     public Sword(Integer id, String name, Integer price) {
-        super(id, name, price);
+        super(id, ItemType.SWORD, name, price);
     }
 
     @Override

@@ -25,6 +25,7 @@ public class Player {
         Gold = 0;
 
         Stats = new PlayerStats();
+        Items = new PlayerItems();
     }
 
     public static Player loadFromFile(String playerName) {
@@ -57,6 +58,9 @@ public class Player {
 
             if (characterData.contains("stats"))
                 character.Stats = PlayerStats.loadFromJSON(characterData.get("stats").asObject());
+
+            if (characterData.contains("items"))
+                character.Items = PlayerItems.loadFromJSON(characterData.get("items").asObject());
 
             CurrentCharacter = character;
             return character;
@@ -98,6 +102,7 @@ public class Player {
         characterData.add("gold", Gold);
 
         Stats.saveToJSON(characterData);
+        Items.saveToJSON(characterData);
 
         try (PrintWriter writer = new PrintWriter(saveFile)) {
             writer.print(characterData.toString());

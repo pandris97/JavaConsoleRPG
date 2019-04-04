@@ -7,7 +7,7 @@ public final class PotionItem extends Item {
     private int healthPointValue;
 
     public PotionItem(Integer id, String name, Integer price, int healthPointValue) {
-        super(id, name, price);
+        super(id, ItemType.POTION, name, price);
         this.healthPointValue = healthPointValue;
     }
 

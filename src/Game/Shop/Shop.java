@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 
@@ -20,6 +21,7 @@ public class Shop {
 //    private List<Item> shopItems;
     private static List<WeaponItem> weaponItems = new ArrayList<>();
     private static List<PotionItem> potionItems = new ArrayList<>();
+    private static HashMap<Integer, Item> allItemsById = new HashMap<>();
     
     public Shop() {
         initItemList();
@@ -79,7 +81,13 @@ public class Shop {
             else {
                 potionItems.add((PotionItem) currentItem);
             }
+
+            allItemsById.put(id, currentItem);
         }
+    }
+
+    public static Item getItemById(int id) {
+        return allItemsById.get(id);
     }
     
     public static void showItemList(){
