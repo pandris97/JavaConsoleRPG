@@ -35,6 +35,8 @@ public class ShopBuyMenu extends Menu {
             toExitShopBuyMenu = true;
         //2}
         //todo
+
+        // items can be bought/sold with Player.buyItem and Player.sellItem
     }
     
     @Override

@@ -1,0 +1,60 @@
+[
+  {
+    "id": 1,
+    "name": "Small Sword",
+    "price": 1000,
+    "type": "sword",
+    "weapondata": {
+      "requiredstrength": 0,
+      "requireddexterity": 0
+    }
+  },
+  {
+    "id": 2,
+    "name": "Medium Sword",
+    "price": 1500,
+    "type": "sword",
+    "weapondata": {
+      "requiredstrength": 10,
+      "requireddexterity": 5
+    }
+  },
+  {
+    "id": 3,
+    "name": "Heavy Sword",
+    "price": 2500,
+    "type": "sword",
+    "weapondata": {
+      "requiredstrength": 20,
+      "requireddexterity": 15
+    }
+  },
+  {
+    "id": 4,
+    "name": "Medium Axe",
+    "price": 1500,
+    "type": "axe",
+    "weapondata": {
+      "requiredstrength": 5,
+      "requireddexterity": 10
+    }
+  },
+  {
+    "id": 5,
+    "name": "Lesser Healing Potion",
+    "price": 400,
+    "type": "potion",
+    "potiondata": {
+      "healthpointvalue": 15
+    }
+  },
+  {
+    "id": 6,
+    "name": "Greater Healing Potion",
+    "price": 800,
+    "type": "potion",
+    "potiondata": {
+      "healthpointvalue": 40
+    }
+  }
+]

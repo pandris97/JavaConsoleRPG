@@ -34,7 +34,8 @@ public class ShopMenu extends Menu {
                 break;
             case 2:
                 //Show your inventory
-                //Player inventory impl. missing
+
+                //get items with Player.getItemData().getAllInventoryItems();
                 break;
             case 3:
                 toExitShop = true;

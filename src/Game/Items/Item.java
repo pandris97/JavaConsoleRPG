@@ -6,11 +6,12 @@ public abstract class Item {
     
     protected String name;
     protected Integer price;
-
-    public Item() {
-    }
+    protected final Integer ID;
+    protected final ItemType type;
     
-    public Item(String name, Integer price) {
+    public Item(Integer id, ItemType type, String name, Integer price) {
+        this.ID = id;
+        this.type = type;
         this.name = name;
         this.price = price;
     }
@@ -30,7 +31,10 @@ public abstract class Item {
     public void setPrice(Integer price) {
         this.price = price;
     }
-    
+
+    public ItemType getType() { return type; }
+
+    public Integer getID() { return ID; }
     
     @Override
     public abstract String toString();

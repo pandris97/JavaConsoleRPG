@@ -6,12 +6,12 @@ public abstract class WeaponItem extends Item {
     protected Integer requiredDexterity;
     protected Integer requiredStrength;
     
-    public WeaponItem(String name, Integer price) {
-        super(name, price);
+    public WeaponItem(Integer id, ItemType type, String name, Integer price) {
+        super(id, type, name, price);
     }
 
-    public WeaponItem(Integer requiredDexterity, Integer requiredStrength, String name, Integer price) {
-        super(name, price);
+    public WeaponItem(Integer id, ItemType type, Integer requiredDexterity, Integer requiredStrength, String name, Integer price) {
+        super(id, type, name, price);
         this.requiredDexterity = requiredDexterity;
         this.requiredStrength = requiredStrength;
     }    

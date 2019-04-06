@@ -3,8 +3,8 @@ package Game.Items;
 
 public class Sword extends WeaponItem {
 
-    public Sword(String name, Integer price) {
-        super(name, price);
+    public Sword(Integer id, String name, Integer price) {
+        super(id, ItemType.SWORD, name, price);
     }
 
     @Override

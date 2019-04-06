@@ -1,5 +1,7 @@
 <h1 align="center">Projekt Eszközök<br>Beadandó projekt</h1>
 
+![Travis (.org)](https://img.shields.io/travis/pandris97/JavaConsoleRPG.svg?style=popout)
+
 ## Tagok:
 - Pálinkás András
 - Király Bianka
