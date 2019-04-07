@@ -9,6 +9,8 @@ public class ShopMenu extends Menu {
     private boolean toExitShop = false;
     private Shop shop = new Shop();
     private ShopBuyMenu shopBuyMenu = new ShopBuyMenu();
+    private ShopSellMenu shopSellMenu = new ShopSellMenu(); 
+    
     //private Shop shop;
     
     public ShopMenu() {
@@ -26,16 +28,21 @@ public class ShopMenu extends Menu {
         shopBuyMenu.runMenu();
     }
     
+    private void goToShopSellMenu() {
+        shopSellMenu.runMenu();
+    }
+    
     @Override
     public void goToMenu(int chosenMenu) {
         switch(chosenMenu) {
             case 1:
+                
                 goToShopBuyMenu();
+                shopBuyMenu = new ShopBuyMenu();
                 break;
             case 2:
-                //Show your inventory
-
-                //get items with Player.getItemData().getAllInventoryItems();
+                goToShopSellMenu();
+                shopSellMenu = new ShopSellMenu();
                 break;
             case 3:
                 toExitShop = true;

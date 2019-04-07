@@ -21,7 +21,7 @@ public final class PotionItem extends Item {
 
     @Override
     public String toString() {
-        return "Potion name: " + name + ", price: " + price + ", restore hp: " + healthPointValue;
+        return ID + " Potion name: " + name + ", price: " + price + ", restore hp: " + healthPointValue;
     }
    
 }

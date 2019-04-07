@@ -94,16 +94,42 @@ public class Shop {
         StringBuilder sb = new StringBuilder();
         sb.append("#### WEAPONS ####\n");
         for (int i = 0; i < weaponItems.size(); i++) {
-            sb.append((i + 1) + " " + weaponItems.get(i).toString() + "\n");
+            sb.append(weaponItems.get(i).toString()).append("\n");
         }
         sb.append("#### POTIONS ####\n");
         for (int i = 0; i < potionItems.size(); i++) {
-            sb.append((weaponItems.size() + i + 1) + " " + potionItems.get(i).toString() + "\n");
+            sb.append(potionItems.get(i).toString()).append("\n");
         }
         System.out.println(sb.toString());
     } 
     
+    public static void sellItem(Item item){
+        //TODO: item kikeruljon a shop-bol --> json-bol is
+        /*
+        if (item.getType() == ItemType.AXE || item.getType() == ItemType.SWORD){
+            weaponItems.remove((WeaponItem) item);
+        }else if (item.getType() == ItemType.POTION ){
+            potionItems.remove((PotionItem) item);
+        }
+        allItemsById.remove(item.getID(), item);
+        */
+    }
     
+    public static void buyItem(Item item){
+         //TODO: item bekeruljon a shop-ba --> json-ba is
+        /*
+        if (item.getType() == ItemType.AXE || item.getType() == ItemType.SWORD){
+            weaponItems.add((WeaponItem) item);
+        }else if (item.getType() == ItemType.POTION ){
+            potionItems.add((PotionItem) item);
+        }
+        allItemsById.put(item.getID(), item);
+        */
+    }
     
+    public void saveToJSON(JsonObject json) {       
+        
+        
+    }
     
 }

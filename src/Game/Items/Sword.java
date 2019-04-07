@@ -9,7 +9,7 @@ public class Sword extends WeaponItem {
 
     @Override
     public String toString() {
-        String out =  "Sword name: " + name + ", price: " + price;
+        String out = ID +  " Sword name: " + name + ", price: " + price;
         String strength = (requiredStrength != null) ? ", required strength: " +  requiredStrength.toString() : "" ;   
         String dexterity = (requiredDexterity != null) ? ", required dexterity: " +  requiredDexterity.toString() : "";
         out += strength;

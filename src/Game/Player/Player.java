@@ -212,13 +212,14 @@ public class Player {
         return Stats;
     }
 
-    public PlayerItems getItemData() { return Items; }
+    public PlayerItems getItemData() { 
+        return Items; 
+    }
 
     // returns true if the purchase was successful, else returns false
     public boolean buyItem(Item newItem) {
         if (!hasEnoughMoney(newItem.getPrice()))
             return false;
-
         if (newItem.getType() == ItemType.AXE || newItem.getType() == ItemType.SWORD) {
             WeaponItem itemAsWeapon = (WeaponItem) newItem;
             if (itemAsWeapon.getRequiredDexterity() > getStats().getDexterity() ||
