@@ -1,6 +1,7 @@
 package Game.Menus;
 
 import Game.Player.Player;
+import Game.Adventure.Adventure;
 
 public class TownMenu extends Menu{
 
@@ -54,9 +55,8 @@ public class TownMenu extends Menu{
         Player character = Player.getCurrentCharacter();
         switch (chosenMenu2){
             case 1:
-                character.addExperience(1);
-                character.addMoney(1);
-                character.receiveDamage(1);
+                Adventure adventure = new Adventure(character);
+                adventure.doAdventure();
                 break;
             case 2:
                 character.spendMoney(1);
