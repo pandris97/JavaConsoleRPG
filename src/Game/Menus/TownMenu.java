@@ -1,7 +1,7 @@
 package Game.Menus;
 
 import Game.Player.Player;
-import Game.Enemy.Adventure;
+import Game.Adventure.Adventure;
 
 public class TownMenu extends Menu{
 
