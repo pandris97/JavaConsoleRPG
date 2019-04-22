@@ -11,7 +11,7 @@ public class Enemy {
     private int GoldGiven;
     public String Type;
 
-    public Enemy(){
+    Enemy(){
         CreateEnemy();
     }
 
@@ -25,7 +25,12 @@ public class Enemy {
         GoldGiven = Damage * 2;
     }
 
-    public void receiveDamage(int amount){
+    @Override
+    public String toString(){
+        return "Ellenfél neve: " + getName() + ", Életereje: "+ getHealth()+ ", Támadóereje: "+ getDamage();
+    }
+
+    void receiveDamage(int amount){
         Health -= amount;
     }
 
@@ -33,23 +38,23 @@ public class Enemy {
         return Health > 0;
     }
 
-    public String getName(){
+    String getName(){
         return Name;
     }
 
-    public int getDamage(){
+    int getDamage(){
         return Damage;
     }
 
-    public int getXpGiven(){
+    int getXpGiven(){
         return XpGiven;
     }
 
-    public int getHealth(){
+    int getHealth(){
         return Health;
     }
 
-    public int getGoldGiven(){
+    int getGoldGiven(){
         return GoldGiven;
     }
 }
