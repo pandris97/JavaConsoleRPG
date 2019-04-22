@@ -55,8 +55,8 @@ public class TownMenu extends Menu{
         Player character = Player.getCurrentCharacter();
         switch (chosenMenu2){
             case 1:
-                Adventure adventure = new Adventure(character);
-                adventure.doAdventure();
+                AdventureMenu adventureMenu = new AdventureMenu();
+                adventureMenu.runMenu();
                 break;
             case 2:
                 character.spendMoney(1);

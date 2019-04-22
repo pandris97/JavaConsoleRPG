@@ -1,14 +1,15 @@
 package Game.Adventure;
 
 import Game.Player.Player;
+import Game.Menus.AdventureMenu;
 
 public class Adventure {
 
     private Player player;
     private boolean isAdventureOver;
 
-    public Adventure(Player player){
-        this.player = player;
+    public Adventure(){
+        this.player = Player.getCurrentCharacter();
     }
 
     public void doAdventure(){
