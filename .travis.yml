@@ -1,29 +1,26 @@
 language: java
 jdk: oraclejdk8
 
+script: ant build
+
 sudo: false
 
-# Blacklist
 branches:
   only:
     - master
 
-# Install dependencies
 addons:
   apt:
     packages:
       - doxygen
 
-# Build your code e.g. by calling make
 script:
   - doxygen Doxyfile
 
-# Generate and deploy documentation
 deploy:
   provider: pages
   skip_cleanup: true
-  local_dir: html
+  local_dir: docs/html
   github_token: $GH_REPO_TOKEN
   on:
-branch: master
-
+    branch: master
