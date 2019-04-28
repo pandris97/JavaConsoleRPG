@@ -3,12 +3,27 @@ jdk: oraclejdk8
 
 sudo: false
 
-script: 
--ant build
-- doxygen Doxyfile
+# Blacklist
+branches:
+  only:
+    - master
 
+# Install dependencies
 addons:
   apt:
     packages:
-- doxygen
+      - doxygen
+
+# Build your code e.g. by calling make
+script:
+  - doxygen Doxyfile
+
+# Generate and deploy documentation
+deploy:
+  provider: pages
+  skip_cleanup: true
+  local_dir: html
+  github_token: $GH_REPO_TOKEN
+  on:
+branch: master
 
