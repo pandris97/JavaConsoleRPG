@@ -1,4 +1,14 @@
 language: java
 jdk: oraclejdk8
 
-script: ant build
+sudo: false
+
+script: 
+-ant build
+- doxygen Doxyfile
+
+addons:
+  apt:
+    packages:
+- doxygen
+
