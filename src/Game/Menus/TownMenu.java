@@ -5,6 +5,7 @@ import Game.Player.Player;
 public class TownMenu extends Menu{
 
     private boolean toExitTown = false;
+    private ShopMenu shopMenu = new ShopMenu();
 
     TownMenu(){
         setTitle("Blight Town");
@@ -24,7 +25,7 @@ public class TownMenu extends Menu{
             int chosenMenu2 = getInput();
             goToMenu(chosenMenu2);
         }
-
+        
         character.saveToFile(false);
 
         return 0;
@@ -48,6 +49,10 @@ public class TownMenu extends Menu{
         }
         return isValid;
     }
+    
+    private void goToShop() {
+        shopMenu.runMenu();
+    }
 
     @Override
     public void goToMenu(int chosenMenu2) {
@@ -59,7 +64,9 @@ public class TownMenu extends Menu{
                 character.receiveDamage(1);
                 break;
             case 2:
-                character.spendMoney(1);
+                goToShop();
+                shopMenu = new ShopMenu();
+                //character.spendMoney(1);
                 break;
             case 3:
                 character.restoreHealth(1);

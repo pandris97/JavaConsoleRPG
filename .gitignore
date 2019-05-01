@@ -4,3 +4,7 @@ out
 *.class
 *.save
 save/
+
+/target/
+/lib/
+/nbproject/

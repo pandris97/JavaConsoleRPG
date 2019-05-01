@@ -1,5 +1,8 @@
 package Game.Player;
 
+import Game.Items.Item;
+import Game.Items.ItemType;
+import Game.Items.WeaponItem;
 import Util.JSON.Json;
 import Util.JSON.JsonObject;
 import Util.JSON.ParseException;
@@ -16,6 +19,7 @@ public class Player {
     private int Gold;
 
     private PlayerStats Stats;
+    private PlayerItems Items;
 
     public Player(String name) {
         Name = name;
@@ -24,6 +28,7 @@ public class Player {
         Gold = 0;
 
         Stats = new PlayerStats();
+        Items = new PlayerItems();
     }
 
     public static Player loadFromFile(String playerName) {
@@ -56,6 +61,9 @@ public class Player {
 
             if (characterData.contains("stats"))
                 character.Stats = PlayerStats.loadFromJSON(characterData.get("stats").asObject());
+
+            if (characterData.contains("items"))
+                character.Items = PlayerItems.loadFromJSON(characterData.get("items").asObject());
 
             CurrentCharacter = character;
             return character;
@@ -97,6 +105,7 @@ public class Player {
         characterData.add("gold", Gold);
 
         Stats.saveToJSON(characterData);
+        Items.saveToJSON(characterData);
 
         try (PrintWriter writer = new PrintWriter(saveFile)) {
             writer.print(characterData.toString());
@@ -201,5 +210,39 @@ public class Player {
 
     public PlayerStats getStats() {
         return Stats;
+    }
+
+    public PlayerItems getItemData() { 
+        return Items; 
+    }
+
+    // returns true if the purchase was successful, else returns false
+    public boolean buyItem(Item newItem) {
+        if (!hasEnoughMoney(newItem.getPrice()))
+            return false;
+        if (newItem.getType() == ItemType.AXE || newItem.getType() == ItemType.SWORD) {
+            WeaponItem itemAsWeapon = (WeaponItem) newItem;
+            if (itemAsWeapon.getRequiredDexterity() > getStats().getDexterity() ||
+                itemAsWeapon.getRequiredStrength() > getStats().getStrength())
+                return false;
+        }
+
+        if (!Items.storeNewItem(newItem))
+            return false;
+
+        spendMoney(newItem.getPrice());
+        return true;
+    }
+
+    public void sellItem(Item item) {
+        for (int i = 0; i < PlayerItems.MaxInventorySize; ++i) {
+            Item currentItem = Items.getInventoryItem(i);
+
+            if (currentItem == item) {
+                Items.removeInventoryItem(i);
+                addMoney(item.getPrice());
+                return;
+            }
+        }
     }
 }

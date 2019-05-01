@@ -1,5 +1,5 @@
-package Game.Menus;
 
+package Game.Menus;
 
 public class MainMenu extends Menu {
 
@@ -65,8 +65,8 @@ public class MainMenu extends Menu {
             case 3:
                 toExit = true;
                 break;
-                default:
-                    break;
+            default:
+                break;
         }
     }
 

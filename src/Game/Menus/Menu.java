@@ -42,7 +42,7 @@ public abstract class Menu{
             System.out.print("->");
             try {
                 choice = Integer.parseInt(input.nextLine());
-            }catch (NumberFormatException e){
+            } catch (NumberFormatException e){
                 isNumber = false;
                 System.out.println("Please type in a number");
             }
@@ -50,6 +50,7 @@ public abstract class Menu{
                 isValidNumber = checkConditions(choice);
             }
         }
+        
         return choice;
     }
 
