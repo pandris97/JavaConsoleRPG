@@ -72,4 +72,4 @@ Készítsünk egy játékprogramot, amiben egy karaktert irányítunk, aki kül�
   - Kilépés
   
 ## Doxygen Documentation:
-   - https://pandris97.github.io/JavaConsoleRPG/
+   - https://pandris97.github.io/JavaConsoleRPG/  
