@@ -9,6 +9,8 @@ import Util.JSON.ParseException;
 
 import java.io.*;
 
+import java.util.Scanner;
+
 public class Player {
 
     private static Player CurrentCharacter = null;
@@ -17,6 +19,7 @@ public class Player {
     private int Level;
     private int Experience;
     private int Gold;
+    private static File deleteFile;
 
     private PlayerStats Stats;
     private PlayerItems Items;
@@ -32,6 +35,7 @@ public class Player {
     }
 
     public static Player loadFromFile(String playerName) {
+        deleteFile = new File("save/" + playerName + ".save");
         File saveFile = new File("save/" + playerName + ".save");
 
         if (!saveFile.exists())
@@ -85,6 +89,7 @@ public class Player {
         }
 
         File saveFile = new File("save/" + Name + ".save");
+        deleteFile = new File("save/" + Name + ".save");
 
         if (saveFile.exists()) {
             if (isNew) {
@@ -188,7 +193,16 @@ public class Player {
     }
 
     private void die() {
-        // maybe delete the character
+        deleteFile.delete();
+        
+        
+        System.out.println("Your character " + Name + " was slain.");
+        System.out.println("Try to be more cautious next time");
+        System.out.println("Game Over...");
+        System.out.print("press any key to exit");
+        Scanner scan = new Scanner(System.in);
+        scan.nextLine();
+        System.exit(0);
     }
 
     public void receiveDamage(int dmg) {
