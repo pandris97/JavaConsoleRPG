@@ -34,9 +34,7 @@ public class AdventureMenu extends Menu {
     @Override
     public void goToMenu(int chosenMenu) {
         switch (chosenMenu){
-            case 1:
-                this.adventure.doAdventure();
-                Adventure adventure = new Adventure();
+           case 1:
                 adventure.doAdventure();
                 adventureIsOver = true;
                 break;
