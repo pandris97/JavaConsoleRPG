@@ -24,6 +24,7 @@ public class AdventureMenu extends Menu {
 
     @Override
     public void printMenu() {
+
         this.adventure = new Adventure();
         System.out.println(adventure.getEnemy());
         System.out.println("1 Fight (Fight a monster)");
@@ -35,6 +36,8 @@ public class AdventureMenu extends Menu {
         switch (chosenMenu){
             case 1:
                 this.adventure.doAdventure();
+                Adventure adventure = new Adventure();
+                adventure.doAdventure();
                 adventureIsOver = true;
                 break;
             case 2:
