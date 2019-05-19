@@ -14,7 +14,7 @@ public class PlayerStats {
     public PlayerStats() {
         MaxHealth = 100;
         CurrentHealth = MaxHealth;
-        Strength = 0;
+        Strength = 1;
         Dexterity = 0;
     }
 
